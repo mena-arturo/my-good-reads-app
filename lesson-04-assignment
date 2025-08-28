@@ -1,0 +1,165 @@
+1.- Create migrations and models
+    When you're ready to create your migrations, tables and models, create them one at a time and check the outcome after each migration run.
+    It's important that you create dependent models first. That is, if you have a model that "belongs to" a different model, you will need to create the "parent" model and table first.
+
+Step 1 Generate Migrations-------------------------------------------------------------------------    
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_review_types 
+invoke  active_record
+create    db/migrate/20250825194312_create_review_types.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_accounts
+invoke  active_record
+create    db/migrate/20250826024944_create_accounts.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_authors
+invoke  active_record
+create    db/migrate/20250826025440_create_authors.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_genres 
+invoke  active_record
+create    db/migrate/20250826025441_create_genres.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_books 
+invoke  active_record
+create    db/migrate/20250826025443_create_books.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_users 
+invoke  active_record
+create    db/migrate/20250826025444_create_users.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_user_books 
+invoke  active_record
+create    db/migrate/20250826025445_create_user_books.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_author_books 
+invoke  active_record
+create    db/migrate/20250826025446_create_author_books.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_reviews 
+invoke  active_record
+create    db/migrate/20250826025447_create_reviews.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_countries 
+invoke  active_record
+create    db/migrate/20250826195026_create_countries.rb
+
+/home/amb/edu/ctd/ruby/my-good-reads-app/bin/rails generate migration create_states 
+invoke  active_record
+create    db/migrate/20250826195027_create_states.rb
+
+
+Step 2 Create Tables-------------------------------------------------------------------------    
+
+amb@ctd1:~/myapp$ bin/rails db:migrate
+== 20250825194312 CreateReviewTypes: migrating ================================
+-- create_table(:review_types)
+   -> 0.0034s
+== 20250825194312 CreateReviewTypes: migrated (0.0035s) =======================
+
+== 20250826024944 CreateAccounts: migrating ===================================
+-- create_table(:accounts)
+   -> 0.0039s
+== 20250826024944 CreateAccounts: migrated (0.0040s) ==========================
+
+== 20250826025440 CreateAuthors: migrating ====================================
+-- create_table(:authors)
+   -> 0.0019s
+== 20250826025440 CreateAuthors: migrated (0.0019s) ===========================
+
+== 20250826025441 CreateGenres: migrating =====================================
+-- create_table(:genres)
+   -> 0.0026s
+== 20250826025441 CreateGenres: migrated (0.0027s) ============================
+
+== 20250826195026 CreateCountries: migrating ==================================
+-- create_table(:countries)
+   -> 0.0022s
+== 20250826195026 CreateCountries: migrated (0.0023s) =========================
+
+== 20250826195027 CreateStates: migrating =====================================
+-- create_table(:states)
+   -> 0.0024s
+== 20250826195027 CreateStates: migrated (0.0024s) ============================
+
+amb@ctd1:~/edu/ctd/ruby/my-good-reads-app$ bin/rails db:migrate
+== 20250826025443 CreateBooks: migrating ======================================
+-- create_table(:books)
+   -> 0.0066s
+== 20250826025443 CreateBooks: migrated (0.0069s) =============================
+
+== 20250826025444 CreateUsers: migrating ======================================
+-- create_table(:users)
+   -> 0.0083s
+== 20250826025444 CreateUsers: migrated (0.0084s) =============================
+
+amb@ctd1:~/edu/ctd/ruby/my-good-reads-app$ bin/rails db:migrate
+== 20250826025445 CreateUserBooks: migrating ==================================
+-- create_table(:user_books)
+   -> 0.0034s
+== 20250826025445 CreateUserBooks: migrated (0.0035s) =========================
+
+== 20250826025446 CreateAuthorBooks: migrating ================================
+-- create_table(:author_books)
+   -> 0.0034s
+== 20250826025446 CreateAuthorBooks: migrated (0.0034s) =======================
+
+== 20250826025447 CreateReviews: migrating ====================================
+-- create_table(:reviews)
+   -> 0.0050s
+== 20250826025447 CreateReviews: migrated (0.0050s) ===========================
+
+
+Step 3. Create Models----------------------------------------------------------------------
+
+amb@ctd1:~/edu/ctd/ruby/my-good-reads-app/app/models$ ls -la *.rb
+-rw-rw-r-- 1 amb amb  38 Aug 27 23:58 account.rb
+-rw-rw-r-- 1 amb amb  74 Aug 21 12:39 application_record.rb
+-rw-rw-r-- 1 amb amb  81 Aug 27 23:58 author_book.rb
+-rw-rw-r-- 1 amb amb  40 Aug 27 23:58 author.rb
+-rw-rw-r-- 1 amb amb  93 Aug 27 23:58 book.rb
+-rw-rw-r-- 1 amb amb  38 Aug 27 23:58 country.rb
+-rw-rw-r-- 1 amb amb  36 Aug 27 23:58 genre.rb
+-rw-rw-r-- 1 amb amb 103 Aug 27 23:58 review.rb
+-rw-rw-r-- 1 amb amb  41 Aug 27 23:58 review_type.rb
+-rw-rw-r-- 1 amb amb  36 Aug 27 23:58 state.rb
+-rw-rw-r-- 1 amb amb  77 Aug 27 23:58 user_book.rb
+-rw-rw-r-- 1 amb amb  99 Aug 27 23:58 user.rb
+
+
+Checking from ruby console:
+
+my-good-reads-app(dev)> Country.all
+  Country Load (4.3ms)  SELECT "countries".* FROM "countries" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> State.all
+  State Load (0.3ms)  SELECT "states".* FROM "states" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> ReviewType.all
+  ReviewType Load (0.4ms)  SELECT "review_types".* FROM "review_types" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> Account.all
+  Account Load (0.3ms)  SELECT "accounts".* FROM "accounts" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> Author.all
+  Author Load (0.3ms)  SELECT "authors".* FROM "authors" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> Genre.all
+  Genre Load (0.4ms)  SELECT "genres".* FROM "genres" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> Book.all
+  Book Load (0.3ms)  SELECT "books".* FROM "books" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> User.all
+  User Load (0.3ms)  SELECT "users".* FROM "users" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> UserBook.all
+  UserBook Load (0.7ms)  SELECT "user_books".* FROM "user_books" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> AuthorBook.all
+  AuthorBook Load (0.3ms)  SELECT "author_books".* FROM "author_books" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> Review.all
+  Review Load (0.3ms)  SELECT "reviews".* FROM "reviews" /* loading for pp */ LIMIT 11 /*application='MyGoodReadsApp'*/
+=> []
+my-good-reads-app(dev)> 
